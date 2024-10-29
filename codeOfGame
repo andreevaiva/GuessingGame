@@ -1,0 +1,55 @@
+import java.util.Scanner;
+import java.util.Random;
+public class Main {
+    public static void main(String[] args) {
+        Scanner cin= new Scanner(System.in);
+        Random rand = new Random();
+        int answer=rand.nextInt(100)+1;
+
+
+        System.out.println("\nWelcome to the GuessingGame. Your purpose is to guess the random number we generated for you [1-100].");
+        System.out.println("Rules:\nType 'quit' to exit.\nOnly guess whole numbers.\nYou will receive hints.");
+        System.out.print("\nEnter your guess:");
+        int num=0;
+        int tries=1;
+        while(num!=answer){
+            if(cin.hasNextInt()){
+                num=cin.nextInt();
+                if(num>=1 && num<=100){
+                    if(answering(answer, num).equals("BIGGER")||answering(answer, num).equals("SMALLER")){
+                        System.out.println("Your guess is "+answering(answer, num)+" than the generated number.");
+                    }else{
+                        System.out.println("CONGRATULATIONS! You guessed right! It took you "+tries+" tries.");
+                        break;
+                    }
+                    tries++;
+                    System.out.print("Guess again: ");
+                }else{
+                    System.out.println("Please, enter only numbers in the [1-100] range.");
+                }
+            }
+            if(cin.hasNextLine()){
+                String command=cin.nextLine();
+                if(command.equals("quit")){
+                    System.out.println("We're sorry to see you quit! The right answer was "+answer+".");
+                    break;
+                }else{
+                    if(!command.isEmpty()){
+                        System.out.println("Error");
+                    }
+                }
+            }
+        }
+    }
+    public static String answering(int answer, int guess){
+        if(answer<guess){
+            return "BIGGER";
+        }else{
+            if(answer>guess){
+                return "SMALLER";
+            }else{
+                return "correct";
+            }
+        }
+    }
+}
